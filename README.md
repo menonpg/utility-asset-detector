@@ -2,22 +2,45 @@
 
 Real-time detection of transmission and distribution (T&D) utility assets using [DART](https://github.com/mkturkcan/DART) — a training-free open-vocabulary object detector built on SAM3.
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/menonpg/utility-asset-detector/blob/main/notebooks/colab_demo.ipynb)
+
 ## Features
 
 - **Zero Training Required** — Detect poles, insulators, transformers, and more without labeled data
 - **Hierarchical Detection** — First detect structures (poles, towers), then components (insulators, cross-arms)
 - **Damage Assessment** — Identify visual damage patterns (cracks, rust, leaning, missing parts)
 - **Video Pipeline** — Process inspection footage with tracking
+- **Web UI** — Gradio interface for easy testing
 - **Configurable Classes** — YAML-based asset hierarchy, easy to extend
 
-## Quick Start
+## 🚀 One-Click Launch (No Setup Required)
+
+**Option 1: Google Colab (Free GPU)**
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/menonpg/utility-asset-detector/blob/main/notebooks/colab_demo.ipynb)
+
+Click the badge above → Runtime → Run all → Use the web UI that appears.
+
+**Option 2: Local with Web UI**
 
 ```bash
-# Clone and install
+# Clone repos
 git clone https://github.com/menonpg/utility-asset-detector.git
+git clone https://github.com/mkturkcan/DART.git
+
+# Install
+cd DART && pip install -e . && cd ..
 cd utility-asset-detector
 pip install -r requirements.txt
 
+# Launch Web UI
+python app.py
+# Opens at http://localhost:7860
+```
+
+## Quick Start (CLI)
+
+```bash
 # Run detection on an image
 python src/detector.py --image inspection_photo.jpg --output results/
 
@@ -289,10 +312,30 @@ for frame in drone.video_stream():
         drone.capture_detail_photo()
 ```
 
+## Web UI
+
+The Gradio web interface provides:
+
+- **Drag & drop** image upload
+- **Live visualization** with bounding boxes
+- **Hierarchy presets** (General, Transmission, Distribution)
+- **Adjustable thresholds** for fine-tuning
+- **JSON export** of detection results
+
+```bash
+# Launch locally
+python app.py
+
+# With public URL (for sharing)
+python app.py --share
+```
+
+![Web UI Screenshot](docs/webui-screenshot.png)
+
 ## Requirements
 
 - Python 3.11+
-- PyTorch 2.7+ with CUDA
+- PyTorch 2.7+ with CUDA (or use Colab for free GPU)
 - DART (auto-installed)
 - See `requirements.txt` for full list
 
