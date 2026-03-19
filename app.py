@@ -79,6 +79,13 @@ def detect_with_classes(
     nms_threshold: float,
 ) -> tuple[np.ndarray, str, str]:
     """Run detection with custom class list."""
+    import torch
+    import gc
+    
+    # Clear GPU memory before running
+    torch.cuda.empty_cache()
+    gc.collect()
+    
     if image is None:
         return None, "[]", "Upload an image"
     
@@ -200,6 +207,13 @@ def run_hierarchical(
     nms_thresh: float,
 ) -> tuple[np.ndarray, str, str]:
     """Run full hierarchical detection."""
+    import torch
+    import gc
+    
+    # Clear GPU memory before running
+    torch.cuda.empty_cache()
+    gc.collect()
+    
     if image is None:
         return None, "[]", "Upload an image"
     
