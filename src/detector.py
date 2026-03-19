@@ -19,6 +19,7 @@ import yaml
 from PIL import Image
 
 # DART imports (installed from mkturkcan/DART)
+from sam3.model_builder import build_sam3_image_model
 from sam3.model.sam3_multiclass_fast import Sam3MultiClassPredictorFast
 
 from .assets import AssetHierarchy
@@ -106,16 +107,18 @@ class UtilityAssetDetector:
     def _init_predictor(self) -> Sam3MultiClassPredictorFast:
         """Initialize the DART predictor based on model variant."""
         if self.config.model_variant == "full":
-            predictor = Sam3MultiClassPredictorFast.from_pretrained(
-                self.config.checkpoint,
-                device=self.config.device
+            # Build SAM3 model from checkpoint
+            model = build_sam3_image_model(
+                checkpoint_path=self.config.checkpoint,
+                device=self.config.device,
+                eval_mode=True,
             )
+            predictor = Sam3MultiClassPredictorFast(model, device=self.config.device)
         elif self.config.model_variant == "pruned":
             # Use pruned backbone (faster, slightly lower accuracy)
-            from sam3.distillation.sam3_student import build_sam3_student_model
-            model = build_sam3_student_model(
-                backbone_config="pruned_16",
-                teacher_checkpoint=self.config.checkpoint,
+            from sam3.model_builder import build_pruned_sam3_image_model
+            model = build_pruned_sam3_image_model(
+                checkpoint_path=self.config.checkpoint,
                 device=self.config.device,
             )
             predictor = Sam3MultiClassPredictorFast(model, device=self.config.device)
