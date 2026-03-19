@@ -269,15 +269,8 @@ def create_ui():
                             lines=20,
                         )
         
-        # Example images
-        gr.Markdown("### Example Images")
-        gr.Examples(
-            examples=[
-                ["https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Wooden_utility_pole.jpg/800px-Wooden_utility_pole.jpg"],
-            ],
-            inputs=input_image,
-            label="Click to load example",
-        )
+        # Example images removed - Wikipedia blocks Gradio downloads
+        # Upload your own utility pole images to test
         
         # Connect button
         detect_btn.click(
