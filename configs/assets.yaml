@@ -1,0 +1,225 @@
+# Utility Asset Detector Configuration
+# =====================================
+# Customize detection classes and parameters for your use case
+
+detector:
+  # Model settings
+  checkpoint: "sam3.pt"
+  device: "cuda"
+  model_variant: "full"  # full, pruned, repvit
+  
+  # Detection thresholds
+  structure_confidence: 0.4
+  component_confidence: 0.35
+  condition_confidence: 0.3
+  
+  # Hierarchical detection
+  roi_padding: 0.1  # Expand structure bbox by 10% for component detection
+  
+  # Performance
+  resolution: 1008
+  use_trt: false
+
+# Asset hierarchy
+# ===============
+# Customize these lists to add/remove detection classes
+
+hierarchy:
+  # Level 1: Primary structures
+  structures:
+    - "utility pole"
+    - "wood pole"
+    - "concrete pole"
+    - "steel pole"
+    - "transmission tower"
+    - "lattice tower"
+    - "monopole tower"
+    - "H-frame tower"
+    - "distribution pole"
+    - "substation"
+    - "distribution box"
+    - "junction box"
+    - "streetlight pole"
+    
+  # Level 2: Components attached to structures
+  components:
+    # Insulators
+    - "insulator"
+    - "pin insulator"
+    - "suspension insulator"
+    - "strain insulator"
+    - "post insulator"
+    - "disc insulator"
+    
+    # Transformers
+    - "transformer"
+    - "pole-mounted transformer"
+    - "pad-mounted transformer"
+    
+    # Structural
+    - "cross arm"
+    - "wood cross arm"
+    - "fiberglass cross arm"
+    - "brace"
+    
+    # Conductors
+    - "conductor"
+    - "power line"
+    - "primary conductor"
+    - "secondary conductor"
+    - "service drop"
+    - "guy wire"
+    - "anchor"
+    - "ground wire"
+    
+    # Protection equipment
+    - "fuse"
+    - "cutout fuse"
+    - "lightning arrester"
+    - "surge arrester"
+    - "recloser"
+    
+    # Other equipment
+    - "switch"
+    - "disconnect switch"
+    - "meter"
+    - "capacitor bank"
+    - "voltage regulator"
+    - "streetlight fixture"
+    
+  # Level 3: Condition indicators
+  conditions:
+    # Physical damage
+    - "crack"
+    - "break"
+    - "fracture"
+    - "hole"
+    - "dent"
+    - "deformation"
+    
+    # Corrosion/wear
+    - "rust"
+    - "corrosion"
+    - "weathering"
+    - "rot"
+    - "decay"
+    
+    # Electrical damage
+    - "burn mark"
+    - "flashover damage"
+    - "arc damage"
+    - "charring"
+    
+    # Wildlife damage
+    - "woodpecker hole"
+    - "woodpecker damage"
+    - "bird nest"
+    - "animal damage"
+    
+    # Structural issues
+    - "lean"
+    - "severe lean"
+    - "tilt"
+    - "misalignment"
+    
+    # Missing/broken parts
+    - "missing part"
+    - "missing insulator"
+    - "broken insulator"
+    - "missing hardware"
+    - "broken cross arm"
+    
+    # Vegetation
+    - "vegetation contact"
+    - "tree contact"
+    - "overgrown vegetation"
+    - "vegetation encroachment"
+    
+    # Equipment issues
+    - "oil leak"
+    - "oil stain"
+    - "damaged wire"
+    - "sagging wire"
+    - "broken conductor"
+    - "loose connection"
+
+# Severity mapping
+# ================
+# Map condition types to severity levels
+
+severity_mapping:
+  high:
+    - "break"
+    - "severe lean"
+    - "burn mark"
+    - "flashover damage"
+    - "arc damage"
+    - "broken conductor"
+    - "missing insulator"
+    - "broken insulator"
+    
+  moderate:
+    - "crack"
+    - "rust"
+    - "corrosion"
+    - "hole"
+    - "rot"
+    - "woodpecker hole"
+    - "lean"
+    - "oil leak"
+    - "damaged wire"
+    - "broken cross arm"
+    
+  low:
+    - "weathering"
+    - "bird nest"
+    - "vegetation contact"
+    - "sagging wire"
+    - "loose connection"
+    - "dent"
+
+# Use case profiles
+# =================
+# Predefined configurations for common scenarios
+
+profiles:
+  transmission:
+    focus_structures:
+      - "transmission tower"
+      - "lattice tower"
+      - "monopole tower"
+    focus_components:
+      - "suspension insulator"
+      - "strain insulator"
+      - "conductor"
+      - "ground wire"
+    priority_conditions:
+      - "rust"
+      - "broken insulator"
+      - "damaged conductor"
+      
+  distribution:
+    focus_structures:
+      - "utility pole"
+      - "wood pole"
+      - "distribution pole"
+    focus_components:
+      - "transformer"
+      - "cross arm"
+      - "fuse"
+      - "insulator"
+    priority_conditions:
+      - "woodpecker damage"
+      - "rot"
+      - "lean"
+      - "oil leak"
+      
+  vegetation_survey:
+    focus_structures:
+      - "utility pole"
+      - "transmission tower"
+    focus_conditions:
+      - "vegetation contact"
+      - "tree contact"
+      - "vegetation encroachment"
+      - "overgrown vegetation"

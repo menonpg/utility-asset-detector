@@ -1,0 +1,22 @@
+# Core dependencies
+torch>=2.7.0
+torchvision>=0.22.0
+numpy<2.0
+
+# DART (install from source)
+# git clone https://github.com/mkturkcan/DART.git
+# cd DART && pip install -e .
+
+# Image processing
+pillow>=10.0.0
+opencv-python>=4.8.0
+
+# Configuration
+pyyaml>=6.0
+
+# Optional: TensorRT acceleration
+# tensorrt>=10.9.0
+
+# Optional: Reporting
+# reportlab>=4.0  # PDF generation
+# pandas>=2.0     # Data analysis
